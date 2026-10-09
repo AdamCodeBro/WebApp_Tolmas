@@ -1,4 +1,7 @@
-﻿namespace WebApp_Tolmas.Models {
+﻿        using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+ namespace WebApp_Tolmas.Models {
     public class Student {
         public int Id { get; set; }
         public string FirstName { get; set; }
