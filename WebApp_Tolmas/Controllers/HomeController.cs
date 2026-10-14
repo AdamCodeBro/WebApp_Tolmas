@@ -1,20 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WebApp_Tolmas.Models;
 
 namespace WebApp_Tolmas.Controllers {
     public class HomeController : Controller {
+        private readonly AppDbContext _context;
+
+        public HomeController(AppDbContext context) {
+            _context = context;
+        }
+
         public IActionResult Index() {
-            return View();
+            var students = _context.Students
+                .Include(s => s.Classroom)
+                    .ThenInclude(c => c.School)
+                .ToList();
+
+            return View(students);
         }
 
         public IActionResult Privacy() {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

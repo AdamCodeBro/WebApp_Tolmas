@@ -21,6 +21,56 @@ namespace WebApp_Tolmas.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("WebApp_Tolmas.Models.Classroom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClassName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GradeLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("Classrooms");
+                });
+
+            modelBuilder.Entity("WebApp_Tolmas.Models.School", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Schools");
+                });
+
             modelBuilder.Entity("WebApp_Tolmas.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -29,12 +79,12 @@ namespace WebApp_Tolmas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ClassRoomId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GradeLevel")
-                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -42,7 +92,41 @@ namespace WebApp_Tolmas.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClassRoomId");
+
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("WebApp_Tolmas.Models.Classroom", b =>
+                {
+                    b.HasOne("WebApp_Tolmas.Models.School", "School")
+                        .WithMany("Classrooms")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("School");
+                });
+
+            modelBuilder.Entity("WebApp_Tolmas.Models.Student", b =>
+                {
+                    b.HasOne("WebApp_Tolmas.Models.Classroom", "ClassRoom")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClassRoom");
+                });
+
+            modelBuilder.Entity("WebApp_Tolmas.Models.Classroom", b =>
+                {
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("WebApp_Tolmas.Models.School", b =>
+                {
+                    b.Navigation("Classrooms");
                 });
 #pragma warning restore 612, 618
         }

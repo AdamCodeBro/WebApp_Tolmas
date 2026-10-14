@@ -5,5 +5,7 @@ namespace WebApp_Tolmas.Models {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
         }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Classroom> Classrooms { get; set; }
+        public DbSet<School> Schools { get; set; }
     }
 }
