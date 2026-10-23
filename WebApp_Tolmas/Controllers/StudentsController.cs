@@ -119,6 +119,7 @@ public class StudentsController : Controller
         }
 
         var student = await _context.Students
+            .Include(s => s.Classroom)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (student == null)
         {

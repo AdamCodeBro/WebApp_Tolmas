@@ -7,6 +7,12 @@
 <div class="text-center">
     <h1 class="display-4">Student Directory</h1>
 
+    <div class="mt-4 mb-4">
+        <a class="btn btn-primary m-2" asp-controller="Students" asp-action="Index">View Students</a>
+        <a class="btn btn-success m-2" asp-controller="Classrooms" asp-action="Index">View Classrooms</a>
+        <a class="btn btn-info m-2" asp-controller="Schools" asp-action="Index">View Schools</a>
+    </div>
+
     <!-- Render the data in a Bootstrap-styled HTML table -->
     <table class="table table-bordered table-striped mt-4">
         <thead class="thead-dark">
